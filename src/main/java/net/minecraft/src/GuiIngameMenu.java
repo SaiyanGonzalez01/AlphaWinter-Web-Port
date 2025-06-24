@@ -17,41 +17,37 @@ public class GuiIngameMenu extends GuiScreen {
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, "Options..."));
 		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + var1, 98, 20, StatCollector.translateToLocal("gui.achievements")));
 		this.controlList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + var1, 98, 20, StatCollector.translateToLocal("gui.stats")));
-
-		// Alpha Snow Code ---
 		this.controlList.add(new GuiButton(999, this.width / 2 - 100, this.height / 4 + 72 + var1, "Alpha Snow: " + (this.mc.gameSettings.alphaSnow ? "ON" : "OFF")));
-		// Alpha Snow Code ---
 	}
 
 	protected void actionPerformed(GuiButton var1) {
-		if (var1.id == 0) {
+		if(var1.id == 0) {
 			this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
 		}
 
-		if (var1.id == 1) {
+		if(var1.id == 1) {
 			this.mc.statFileWriter.readStat(StatList.leaveGameStat, 1);
-			if (this.mc.isMultiplayerWorld()) {
+			if(this.mc.isMultiplayerWorld()) {
 				this.mc.theWorld.sendQuittingDisconnectingPacket();
 			}
 
-			this.mc.changeWorld1((World) null);
+			this.mc.changeWorld1((World)null);
 			this.mc.displayGuiScreen(new GuiMainMenu());
 		}
 
-		if (var1.id == 4) {
-			this.mc.displayGuiScreen((GuiScreen) null);
+		if(var1.id == 4) {
+			this.mc.displayGuiScreen((GuiScreen)null);
 			this.mc.setIngameFocus();
 		}
 
-		if (var1.id == 5) {
+		if(var1.id == 5) {
 			this.mc.displayGuiScreen(new GuiAchievements(this.mc.statFileWriter));
 		}
 
-		if (var1.id == 6) {
+		if(var1.id == 6) {
 			this.mc.displayGuiScreen(new GuiStats(this, this.mc.statFileWriter));
 		}
 
-		// Alpha Snow Code ---
 		if (var1.id == 999) {
 			this.mc.gameSettings.alphaSnow = !this.mc.gameSettings.alphaSnow;
 			GameSettings.staticAlphaSnow = this.mc.gameSettings.alphaSnow;
@@ -66,7 +62,6 @@ public class GuiIngameMenu extends GuiScreen {
 			this.mc.theWorld.chunkProvider.unload100OldestChunks();
 			this.mc.renderGlobal.loadRenderers();
 		}
-		// Alpha Snow Code ---
 
 	}
 
@@ -78,6 +73,7 @@ public class GuiIngameMenu extends GuiScreen {
 	public void drawScreen(int var1, int var2, float var3) {
 		this.drawDefaultBackground();
 		boolean var4 = !this.mc.theWorld.func_650_a(this.updateCounter2++);
+		this.mc.setIngameNotInFocus();
 		if(var4 || this.updateCounter < 20) {
 			float var5 = ((float)(this.updateCounter % 10) + var3) / 10.0F;
 			var5 = MathHelper.sin(var5 * (float)Math.PI * 2.0F) * 0.2F + 0.8F;
